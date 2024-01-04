@@ -66,8 +66,8 @@ local function discover_params(python, script, path, positions, root)
     return {}
   end
 
-  for position in positions:to_list() do
-    logger.debug("position:", position)
+  for i, pos in tree:iter_nodes() do
+    logger.debug("node type:", pos:data().type)
   end
 
   for line in vim.gsplit(data.stdout, "\n", true) do
