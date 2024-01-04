@@ -66,7 +66,7 @@ local function discover_params(python, script, path, positions, root)
     return {}
   end
 
-  for i, pos in tree:iter_nodes() do
+  for i, pos in positions:iter_nodes() do
     logger.debug("node type:", pos:data().type)
   end
 
