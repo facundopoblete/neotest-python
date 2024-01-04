@@ -137,7 +137,7 @@ end
 function PythonNeotestAdapter.build_spec(args)
   local position = args.tree:data()
   local results_path = async.fn.tempname()
-  local stream_path = async.fn.tempname()
+  local stream_path = "/Users/facundopoblete/Desktop/sfile.json"
   lib.files.write(stream_path, "")
 
   local root = PythonNeotestAdapter.root(position.path)
