@@ -81,7 +81,7 @@ local function discover_params(python, script, path, positions, root)
     
     if test ~= nil then
       logger.debug("parameterized test:", line)
-      logger.debug("associated test, :", line)
+      logger.debug("associated test, :", test:data().name)
       
       local test_id = test:data().name
       if not test_params[test_id] then
