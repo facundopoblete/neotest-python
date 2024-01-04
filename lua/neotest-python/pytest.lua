@@ -80,7 +80,7 @@ local function discover_params(python, script, path, positions, root)
     end
     
     if test ~= nil then
-      local test_id = test:data().id
+      local test_id = test:data().name
       local param_index = string.find(line, test_id, nil, true)
       local param_id = string.sub(line, param_index, #line)
       logger.debug("param_id:", param_id)
@@ -91,10 +91,11 @@ local function discover_params(python, script, path, positions, root)
       logger.debug("test id:", test:data().id)
       logger.debug("test name:", test:data().name)
       logger.debug("\n")
-      if not test_params[test_id] then
-        test_params[test_id] = { param_id }
+      local t_id = test:data().id
+      if not test_params[t_id] then
+        test_params[t_id] = { param_id }
       else
-        table.insert(test_params[test_id], param_id)
+        table.insert(test_params[t_id], param_id)
       end
 
     end
