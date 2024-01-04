@@ -66,7 +66,7 @@ local function discover_params(python, script, path, positions, root)
     return {}
   end
 
-  for position in positions do
+  for position in positions.to_list() do
     logger.debug("position:", position)
   end
 
