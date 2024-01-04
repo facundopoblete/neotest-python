@@ -66,26 +66,30 @@ local function discover_params(python, script, path, positions, root)
     return {}
   end
 
-  for i, pos in positions:iter_nodes() do
-    logger.debug("--- node type:", pos:data().type)
-    logger.debug("node type:", pos:data().name)
-    logger.debug("node type:", pos:data().id)
-  end
-
   for line in vim.gsplit(data.stdout, "\n", true) do
-    logger.debug("discover_params, line:", line)
-    local param_index = string.find(line, "[", nil, true)
-    if param_index then
-      local test_id = root .. lib.files.path.sep .. string.sub(line, 1, param_index - 1)
-      local param_id = string.sub(line, param_index + 1, #line - 1)
+    local match_score = 0
+    local test = nil
 
-      if positions:get_key(test_id) then
-        if not test_params[test_id] then
-          test_params[test_id] = { param_id }
-        else
-          table.insert(test_params[test_id], param_id)
+    for i, pos in positions:iter_nodes() do
+      if string.find(line, pos:data().name, nil, true) then
+        if (string.find(line, pos:data().name, nil, true) + #pos:data().name) != #line #pos:data().name > match_score then
+          match_score = #pos:data().name
+          test = pos
         end
       end
+    end
+    
+    if test != nil then
+      logger.debug("parameterized test:", line)
+      logger.debug("associated test, :", line)
+      
+      local test_id = test:data().name
+      if not test_params[test_id] then
+        test_params[test_id] = { line }
+      else
+        table.insert(test_params[test_id], line)
+      end
+
     end
   end
   return test_params
