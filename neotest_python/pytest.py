@@ -108,7 +108,8 @@ class NeotestResultCollector:
         file_path, *name_path = item.nodeid.split("::")
         abs_path = str(Path(self.pytest_config.rootdir, file_path))
         *namespaces, test_name = name_path
-        pos_id = "::".join([abs_path, *namespaces, test_name])
+        valid_test_name, *params = test_name.split("[")  # ]
+        pos_id = "::".join([abs_path, *namespaces, valid_test_name])
 
         errors: List[NeotestError] = []
         short = self._get_short_output(self.pytest_config, report)
@@ -117,7 +118,7 @@ class NeotestResultCollector:
         if getattr(item, "callspec", None) is not None:
             # Parametrized test
             if self.emit_parameterized_ids:
-                msg_prefix = f"[{item.callspec.id}] "
+                pos_id += item.callspec.id
             else:
                 msg_prefix = f"[{item.callspec.id}] "
         if report.outcome == "failed":
