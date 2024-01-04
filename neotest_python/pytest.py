@@ -118,9 +118,7 @@ class NeotestResultCollector:
         if getattr(item, "callspec", None) is not None:
             # Parametrized test
             if self.emit_parameterized_ids:
-                pos_id += f"[{item.callspec.id}]"
-                print("pos_id:")
-                print(pos_id)
+                #pos_id += f"[{item.callspec.id}]"
             else:
                 msg_prefix = f"[{item.callspec.id}] "
         if report.outcome == "failed":
