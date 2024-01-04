@@ -67,6 +67,7 @@ local function discover_params(python, script, path, positions, root)
   end
 
   for line in vim.gsplit(data.stdout, "\n", true) do
+    logger.debug("discover_params, line:", line)
     local param_index = string.find(line, "[", nil, true)
     if param_index then
       local test_id = root .. lib.files.path.sep .. string.sub(line, 1, param_index - 1)
@@ -93,6 +94,7 @@ end
 ---@param root string
 function M.augment_positions(python, script, path, positions, root)
   if has_parametrize(path) then
+    logger.debug("has_parametrize:", path)
     local test_params = discover_params(python, script, path, positions, root)
     add_test_instances(positions, test_params)
   end
