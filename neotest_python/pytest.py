@@ -108,8 +108,7 @@ class NeotestResultCollector:
         file_path, *name_path = item.nodeid.split("::")
         abs_path = str(Path(self.pytest_config.rootdir, file_path))
         *namespaces, test_name = name_path
-        valid_test_name, *params = test_name.split("[")  # ]
-        pos_id = "::".join([abs_path, *namespaces, valid_test_name])
+        pos_id = "::".join([abs_path, *namespaces, test_name])
 
         errors: List[NeotestError] = []
         short = self._get_short_output(self.pytest_config, report)
