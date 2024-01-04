@@ -66,6 +66,10 @@ local function discover_params(python, script, path, positions, root)
     return {}
   end
 
+  for position in positions do
+    logger.debug("position:", position)
+  end
+
   for line in vim.gsplit(data.stdout, "\n", true) do
     logger.debug("discover_params, line:", line)
     local param_index = string.find(line, "[", nil, true)
