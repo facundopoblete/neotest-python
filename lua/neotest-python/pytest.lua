@@ -67,7 +67,9 @@ local function discover_params(python, script, path, positions, root)
   end
 
   for i, pos in positions:iter_nodes() do
-    logger.debug("node type:", pos:data().type)
+    logger.debug("--- node type:", pos:data().type)
+    logger.debug("node type:", pos:data().name)
+    logger.debug("node type:", pos:data().id)
   end
 
   for line in vim.gsplit(data.stdout, "\n", true) do
