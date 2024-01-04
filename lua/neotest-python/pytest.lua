@@ -14,8 +14,8 @@ local function add_test_instances(positions, test_params)
       local pos_params = test_params[position.id] or {}
       for _, params_str in ipairs(pos_params) do
         local new_data = vim.tbl_extend("force", position, {
-          id = string.format("%s[%s]", position.id, params_str),
-          name = string.format("%s[%s]", position.name, params_str),
+          id = params_str,
+          name = params_str,
         })
         new_data.range = nil
 
