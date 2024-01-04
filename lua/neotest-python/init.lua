@@ -136,7 +136,7 @@ end
 ---@return neotest.RunSpec
 function PythonNeotestAdapter.build_spec(args)
   local position = args.tree:data()
-  local results_path = async.fn.tempname()
+  local results_path = "/Users/facundopoblete/Desktop/rfile.json"
   local stream_path = "/Users/facundopoblete/Desktop/sfile.json"
   lib.files.write(stream_path, "")
 
