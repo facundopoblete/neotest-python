@@ -69,34 +69,28 @@ local function discover_params(python, script, path, positions, root)
 
   for line in vim.gsplit(data.stdout, "\n", true) do
     local match_score = 0
-    local test = nil
+    local match_test = nil
 
     for i, pos in positions:iter_nodes() do
       if string.find(line, pos:data().name, nil, true) then
         if (string.find(line, pos:data().name, nil, true) + #pos:data().name) ~= #line and #pos:data().name > match_score then
           match_score = #pos:data().name
-          test = pos
+          match_test = pos
         end
       end
     end
     
-    if test ~= nil then
-      local test_id = test:data().name
-      local param_index = string.find(line, test_id, nil, true)
+    if match_test ~= nil then
+      local test_name = test:data().name
+      local test_id = test:data().id
+
+      local param_index = string.find(line, test_name, nil, true)
       local param_id = string.sub(line, param_index, #line)
-      logger.debug("param_id:", param_id)
-      logger.debug("parameterized test:", line)
-      logger.debug("associated test, :", test:data().name)
-      logger.debug("parameterized test:", line)
-      logger.debug("test path:", test:data().path)
-      logger.debug("test id:", test:data().id)
-      logger.debug("test name:", test:data().name)
-      logger.debug("\n")
-      local t_id = test:data().id
-      if not test_params[t_id] then
-        test_params[t_id] = { param_id }
+      
+      if not test_params[test_id] then
+        test_params[test_id] = { param_id }
       else
-        table.insert(test_params[t_id], param_id)
+        table.insert(test_params[test_id], param_id)
       end
 
     end
@@ -113,7 +107,6 @@ end
 ---@param root string
 function M.augment_positions(python, script, path, positions, root)
   if has_parametrize(path) then
-    logger.debug("has_parametrize:", path)
     local test_params = discover_params(python, script, path, positions, root)
     add_test_instances(positions, test_params)
   end
