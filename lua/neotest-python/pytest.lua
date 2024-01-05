@@ -82,19 +82,19 @@ local function discover_params(python, script, path, positions, root)
     end
     
     if match_test ~= nil then
-      local test_name = test:data().name
-      local test_id = test:data().id
+      local test_name = match_test:data().name
+      local test_id = match_test:data().id
 
       local param_index = string.find(line, test_name, nil, true)
       local param_id = string.sub(line, param_index, #line)
       
       logger.debug("param_id:", param_id)
       logger.debug("parameterized test:", line)
-      logger.debug("associated test, :", test:data().name)
+      logger.debug("associated test, :", match_test:data().name)
       logger.debug("parameterized test:", line)
-      logger.debug("test path:", test:data().path)
-      logger.debug("test id:", test:data().id)
-      logger.debug("test name:", test:data().name)
+      logger.debug("test path:", match_test:data().path)
+      logger.debug("test id:", match_test:data().id)
+      logger.debug("test name:", match_test:data().name)
       logger.debug("\n")
 
       if not test_params[test_id] then
