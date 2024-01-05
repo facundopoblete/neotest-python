@@ -72,8 +72,7 @@ local function discover_params(python, script, path, positions, root)
     local match_test = nil
 
     for i, pos in positions:iter_nodes() do
-      logger.warn("pos.type:", pos:data().type)
-      if string.find(line, pos:data().name, nil, true) then
+      if pos:data().type == "test" and string.find(line, pos:data().name, nil, true) then
         if (string.find(line, pos:data().name, nil, true) + #pos:data().name) ~= #line and #pos:data().name > match_score then
           match_score = #pos:data().name
           match_test = pos
